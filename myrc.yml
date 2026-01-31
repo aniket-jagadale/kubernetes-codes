@@ -1,0 +1,20 @@
+##it dosen't support conditions
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: myrc
+spec:
+  replicas: 3   # it order how many pods to i want to create
+  selector:   #it helps to adopt the pods on the basis of labels
+    app: myapp
+  template:   # it helps create the pods with the specified configuration
+    metadata:
+      labels: 
+        app: myapp
+    spec:
+      containers:
+      - name: mycontainer
+        image: nginx
+        ports:
+        - containerPort: 80
+
