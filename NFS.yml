@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydeploy
+spec:
+  replicas: 3   # it order how many pods to i want to create
+  selector:   #it helps to adopt the pods on the basis of labels
+    matchLabels:
+      app: myapp
+  template:   # it helps create the pods with the specified configuration
+    metadata:
+      labels: 
+        app : myapp  
+    spec:
+      containers:
+      - name: mycontainer
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:   #pod path 
+        - name: myefsvolume   # use
+          mountPath: /usr/share/nginx/html
+      volumes:    #host path
+      - name: myefsvolume  #create
+        nfs:
+          server: fs-03ed75ca904dd85ab.efs.us-east-1.amazonaws.com   # IP of NFS server
+          path: /data
